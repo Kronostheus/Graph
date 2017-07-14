@@ -11,9 +11,12 @@ public class Tile {
 		return value;
 	}
 	
-	//TODO Implementation up for debate
-	public void setMerged(){
-		canMerge = false;
+	public void setValue(int val){
+		value = val;
+	}
+	
+	public void setMerged(boolean merge){
+		canMerge = merge;
 	}
 	
 	public boolean getMerge(){
@@ -33,7 +36,8 @@ public class Tile {
 	public void merge(Tile tile){
 		if(mergeQuery(tile)){
 			value *= 2;
-			setMerged();
+			setMerged(false);
+			tile.setValue(0);
 		}
 	}
 }
