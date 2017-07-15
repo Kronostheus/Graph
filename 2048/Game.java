@@ -197,6 +197,7 @@ public class Game extends JPanel{
 	 private void moveTiles(int rInc, int cInc){
 		 Tile[][] prevBoard = tiles;
 		 moved = false;
+		 
 		 for(int r = 0; r < side; r++){
 			 for(int c = 0; c < side; c++){
 				 Tile curr = tiles[r][c];
@@ -207,7 +208,9 @@ public class Game extends JPanel{
 				 lookAhead(r, c, rInc, cInc);
 				 
 			 }
-		 }		
+		 }	
+		 
+		 
 		 
 		 if(compareBoards(prevBoard)){
 			 checkState();	
@@ -235,7 +238,6 @@ public class Game extends JPanel{
 					 score += next.getValue();
 					 moved = true;
 				 }
-				 lookAhead(nR, nC, rInc, cInc);
 			 }
 			 else{
 				 if(checking)
@@ -247,14 +249,17 @@ public class Game extends JPanel{
 				 if(withinRange(row-rInc, col-cInc)){
 					 rememberMe(row, col, rInc, cInc);
 				 }
+				 
 				 moved= true;
-				 lookAhead(nR, nC, rInc, cInc);
 				 
 			 }
+			 lookAhead(nR, nC, rInc, cInc);
 		 } 
 	 }
 	 
+	 
 	 private void rememberMe(int row, int col, int rInc, int cInc){
+		 
 		 while (withinRange(row, col)){
 			 if(withinRange(row-rInc, col-cInc))
 				 break;
@@ -270,6 +275,8 @@ public class Game extends JPanel{
 		 }
 		 
 	 }
+	 
+	 
 	 
 	 private boolean compareBoards(Tile[][] board){
 		 for(int x = 0; x < side; x++){
@@ -294,24 +301,9 @@ public class Game extends JPanel{
 	 private void clearMerges(){
 		 for(int x = 0; x < side; x++){
 			 for(int y = 0; y < side; y++){
-				 //if(tiles[x][y] != null)
-					 tiles[x][y].setMerged(true);
+				tiles[x][y].setMerged(true);
 			 }
 		 }
-	 }
-	 
-	 private boolean canMove(){
-		 checking = true;
-		 boolean result;
-		 Tile[][] prevBoard = tiles;
-		 moveUp();
-		 moveDown();
-		 moveLeft();
-		 moveRight();
-		 result = compareBoards(prevBoard);
-		 checking = false;
-		 tiles = prevBoard;
-		 return result;
 	 }
 	 
 	 private boolean withinRange(int row, int col){
@@ -351,10 +343,7 @@ public class Game extends JPanel{
 	 public void drawBoard(){
 		 for(int x = 0; x < side; x++){
 			 for(int y = 0; y < side; y++){
-				 //if(tiles[x][y] != null)
 					 System.out.print(tiles[x][y].getValue() + " ");
-				 /*else
-					 System.out.print(0 + " ");*/
 			 }
 			 System.out.println();
 		 }
@@ -371,13 +360,5 @@ public class Game extends JPanel{
 	            f.setLocationRelativeTo(null);
 	            f.setVisible(true);
 	        });
-		 	/*game.start();
-	        Scanner scan = new Scanner(System.in);
-	        while(state != gameState.over || state != gameState.won){
-	        	game.play(scan.nextInt());
-	        	game.drawBoard();
-	        	//game.checkState();
-	        }
-	        scan.close();*/
 	 }
 }
